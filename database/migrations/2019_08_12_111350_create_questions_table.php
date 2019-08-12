@@ -16,7 +16,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->unSignedInteger('survey_id');
-            $table->text('question_text');
+            $table->text('question_text')->nullable();
             $table->string('question_type');
             $table->boolean('is_required')->default(false);
             $table->timestamps();

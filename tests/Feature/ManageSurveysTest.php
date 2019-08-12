@@ -81,4 +81,43 @@ class ManageSurveysTest extends TestCase
             ->assertSee($survey->title)
             ->assertSee($question->question_text);
     }
+
+    /** @test */
+    public function a_user_can_add_a_question_to_a_survey()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $survey = factory(Survey::class)->create();
+
+        $attributes = [
+            'question_text' => $this->faker->sentence(),
+            'question_type' => 'input'
+        ];
+
+        $this->post('/api/surveys/' . $survey->id . '/questions', $attributes)
+            ->assertStatus(201);
+
+        $this->assertDatabaseHas('questions', $attributes);
+    }
+
+    /** @test */
+    public function a_user_can_delete_a_survey_question()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $survey = factory(Survey::class)->create();
+
+        $question = $survey->addQuestion([
+            'question_text' => $this->faker->sentence(),
+            'question_type' => 'input'
+        ]);
+
+        $this->delete('/api/surveys/' . $survey->id . '/questions/' . $question->id)->assertStatus(200);
+
+        $this->assertDatabaseMissing('questions', $question->toArray());
+    }
 }

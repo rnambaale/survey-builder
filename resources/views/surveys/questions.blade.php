@@ -8,8 +8,10 @@
                 <div class="card-header">{{ $survey->title }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/surveys" autocomplete="off">
+                    <form method="POST" action="/surveys/{{ $survey->id }}/questions" autocomplete="off">
                         @csrf
+
+                        @method('PATCH')
     
                         <div class="questions-container">
                             <h3>Questions</h3>
@@ -20,7 +22,7 @@
                                     data-question="{{ $question->id }}">
                                     <input
                                         type="hidden"
-                                        name="questions[{{ $question->id }}][ID]"
+                                        name="questions[{{ $key }}][ID]"
                                         value="{{ $question->id }}" />
 
                                     <h4 class="">
@@ -63,7 +65,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 
                                     <div class="form-group row">
                                         <label class="col-md-2 control-label">Question Text</label>

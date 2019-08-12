@@ -68,28 +68,29 @@ $(document).on("click", ".add-question", function(e) {
         url: `/api/surveys/${survey}/questions`,
         type: "POST",
         data: {
-            survey
+            survey,
+            question_text: ""
         },
         datatype: "json",
         success: function(data) {
             console.log(data);
             $(".add-question").removeAttr("disabled");
-            if (data.status == 1) {
-                $(".questions-container").append(`\
-                <div class="question" id="question_${
-                    data.question_ID
-                }" data-question="${data.question_ID}">\
+
+            $(".questions-container").append(`\
+                <div class="question" id="question_${data.id}" data-question="${
+                data.id
+            }">\
                     <input
                         type="hidden"\
-                        name="questions[${data.question_ID}][ID]"\
-                        value="${data.question_ID}" />\
+                        name="questions[${data.id}][ID]"\
+                        value="${data.id}" />\
 
                     <h4 class="clearfix">
                         <span class="float-left">Question 1</span>\
                         <span class="float-right">\
                             <a\
                                 href="#"\
-                                data-question="${data.question_ID}"\
+                                data-question="${data.id}"\
                                 data-survey="${survey}"\
                                 data-indicator=""\
                                 class="btn btn-danger btn-sm delete-question"\
@@ -101,11 +102,9 @@ $(document).on("click", ".add-question", function(e) {
                         <label class="col-md-2 control-label">Question Type</label>\
                         <div class="col-md-4">\
                             <select\
-                                name="questions[${
-                                    data.question_ID
-                                }][question_type]"\
+                                name="questions[${data.id}][question_type]"\
                                 class="form-control form-control-sm question_type"\
-                                data-question="${data.question_ID}"\
+                                data-question="${data.id}"\
                             >\
                                 <option value="input">Open Text</option>\
                                 <option value="radio">Select One</option>\
@@ -117,7 +116,7 @@ $(document).on("click", ".add-question", function(e) {
                             <div class="checkbox">\
                                 <label>\
                                     <input type="checkbox" name="questions[${
-                                        data.question_ID
+                                        data.id
                                     }][is_required]" value="1"> Required question\
                                 </label>\
                             </div>\
@@ -150,7 +149,6 @@ $(document).on("click", ".add-question", function(e) {
                     </div>\
                 </div>\
                 `);
-            }
         },
         error: function(data) {
             console.log(data);
