@@ -19,12 +19,47 @@ class ManageSurveysTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-
         $this->actingAs(factory(User::class)->create());
 
         $survey = factory(Survey::class)->create();
 
         $this->get('/surveys')
             ->assertSee($survey->title);
+    }
+
+    /** @test */
+    public function a_user_can_create_a_survey()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $this->get('/surveys/create')->assertStatus(200);
+
+        $attributes = ['title' => $this->faker->title()];
+
+        $this->post('/surveys', $attributes)->assertRedirect('/surveys');
+
+        $this->assertDatabaseHas('surveys', $attributes);
+    }
+
+    /** @test */
+    public function a_user_can_update_a_survey()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $survey = factory(Survey::class)->create();
+
+        $this->get('/surveys/' . $survey->id . '/edit')
+            ->assertStatus(200)
+            ->assertSee($survey->title);
+
+        $attributes = ['title' => 'Some Updated Title'];
+
+        $this->patch('/surveys/' . $survey->id, $attributes)->assertRedirect('/surveys');
+
+        $this->assertDatabaseHas('surveys', $attributes);
     }
 }

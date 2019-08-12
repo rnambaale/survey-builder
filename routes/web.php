@@ -21,4 +21,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/surveys', 'SurveysController@index');
+    Route::get('/surveys/create', 'SurveysController@create');
+    Route::post('/surveys', 'SurveysController@store');
+
+    Route::get('/surveys/{survey}/edit', 'SurveysController@edit');
+    Route::patch('/surveys/{survey}', 'SurveysController@update');
 });
