@@ -26,4 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/surveys/{survey}/edit', 'SurveysController@edit');
     Route::patch('/surveys/{survey}', 'SurveysController@update');
+
+
+    Route::get('/surveys/{survey}/questions', 'SurveysController@questions');
 });

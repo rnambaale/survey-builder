@@ -16,3 +16,31 @@
 * {
     border-radius: 0px !important;
 }
+
+/****************************************************************************
+* Surveys
+****************************************************************************/
+/* .questions-container{} */
+
+.questions-container h3,
+.indicator-questions-container h3 {
+    font-size: 20px;
+    border-bottom: 2px solid #bbb;
+}
+
+.questions-container .question,
+.indicator-questions-container .indicator-question {
+    padding: 0 0 10px;
+    border-bottom: 1px solid #dcd4d4;
+    /* border-top: 1px solid #dcd4d4; */
+    margin-bottom: 5px;
+}
+
+.questions-container .question h4,
+.indicator-questions-container .indicator-question h4 {
+    font-size: 16px;
+}
+
+.questions-container .choices_container .choice {
+    margin: 5px 0;
+}

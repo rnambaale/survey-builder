@@ -17,6 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->unSignedInteger('survey_id');
             $table->text('question_text');
+            $table->string('question_type');
             $table->boolean('is_required')->default(false);
             $table->timestamps();
 

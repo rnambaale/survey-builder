@@ -19,7 +19,7 @@
     <script src="{{ mix('js/app.js') }}" defer></script>    
 </head>
 <body>
-    <div id="app">
+    <div id="appp">
         <header>
             <nav class="navbar navbar-expand-md navbar-light bg-light">
                 <a class="navbar-brand" href="/">{{ config('app.name', 'Laravel') }}</a>

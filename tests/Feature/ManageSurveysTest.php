@@ -62,4 +62,23 @@ class ManageSurveysTest extends TestCase
 
         $this->assertDatabaseHas('surveys', $attributes);
     }
+
+    /** @test */
+    public function a_user_can_view_survey_questions()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $survey = factory(Survey::class)->create();
+        $question = $survey->addQuestion([
+            'question_text' => $this->faker->sentence(),
+            'question_type' => 'input'
+        ]);
+
+        $this->get('/surveys/' . $survey->id . '/questions')
+            ->assertStatus(200)
+            ->assertSee($survey->title)
+            ->assertSee($question->question_text);
+    }
 }

@@ -19,7 +19,8 @@ class SurveyTest extends TestCase
         $survey = factory(Survey::class)->create();
 
         $question = $survey->addQuestion([
-            'question_text' => 'Test Question'
+            'question_text' => 'Test Question',
+            'question_type' => 'input'
         ]);
 
         $this->assertCount(1, $survey->questions);

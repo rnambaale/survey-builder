@@ -43,7 +43,6 @@ class SurveysController extends Controller
 
     public function update(Survey $survey)
     {
-        //validate
         $attributes = request()->validate(
             [
                 'title'         => 'required',
@@ -53,5 +52,10 @@ class SurveysController extends Controller
         $survey->update($attributes);
 
         return redirect('surveys');
+    }
+
+    public function questions(Survey $survey)
+    {
+        return view('surveys.questions', compact('survey'));
     }
 }

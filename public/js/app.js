@@ -53,15 +53,10 @@ $(document).on("click", ".delete-question", function (e) {
   e.preventDefault();
   var survey = $(this).data("survey");
   var question = $(this).data("question");
-  var indicator = $(this).data("indicator");
   $.ajax({
-    url: "/api/deleteQuestion",
-    type: "POST",
-    data: {
-      survey: survey,
-      question: question,
-      indicator: indicator
-    },
+    url: "/api/surveys/".concat(survey, "/questions/").concat(question),
+    type: "DELETE",
+    data: {},
     datatype: "json",
     success: function success(data) {
       console.log(data);
@@ -76,13 +71,11 @@ $(document).on("click", ".add-question", function (e) {
   e.preventDefault();
   $(this).attr("disabled", "disabled");
   var survey = $(this).data("survey");
-  var indicator = $(this).data("indicator");
   $.ajax({
-    url: "/api/addQuestion",
+    url: "/api/surveys/".concat(survey, "/questions"),
     type: "POST",
     data: {
-      survey: survey,
-      indicator: indicator
+      survey: survey
     },
     datatype: "json",
     success: function success(data) {
@@ -90,7 +83,7 @@ $(document).on("click", ".add-question", function (e) {
       $(".add-question").removeAttr("disabled");
 
       if (data.status == 1) {
-        $(".questions-container").append("                <div class=\"question\" id=\"question_".concat(data.question_ID, "\" data-question=\"").concat(data.question_ID, "\">                    <input\n                        type=\"hidden\"                        name=\"questions[").concat(data.question_ID, "][ID]\"                        value=\"").concat(data.question_ID, "\" />\n                    <h4 class=\"clear\">\n                        <span class=\"pull-left\">Question ").concat(data.question_order, "</span>                        <span class=\"pull-right\">                            <a                                href=\"#\"                                data-question=\"").concat(data.question_ID, "\"                                data-survey=\"").concat(survey, "\"                                data-indicator=\"").concat(indicator, "\"                                class=\"btn btn-default btn-sm delete-question\"                            >Delete Question</a>                        </span>                    </h4>                    <div class=\"row\">                        <div class=\"form-group form-group-sm\">                            <label class=\"col-md-2 control-label\">Question Type</label>                            <div class=\"col-md-4\">                                <select                                    name=\"questions[").concat(data.question_ID, "][question_type]\"                                    class=\"form-control question_type\"                                    data-question=\"").concat(data.question_ID, "\"                                >                                    <option value=\"input\">Open Text</option>                                    <option value=\"radio\">Select One</option>                                    <option value=\"checkbox\">Select Many</option>                                    <option value=\"textarea\">Multi-line Open Text</option>                                </select>                            </div>                            <div class=\"col-md-6\">                                <div class=\"checkbox\">                                    <label>                                        <input type=\"checkbox\" name=\"questions[").concat(data.question_ID, "][is_required]\" value=\"1\"> Required question                                    </label>                                </div>                            </div>                        </div>                    </div>\n                    <div class=\"row\">                        <div class=\"form-group form-group-sm\">                            <label class=\"col-md-2 control-label\">Question Text</label>                            <div class=\"col-md-10\">                                <input type=\"\" name=\"questions[").concat(data.question_ID, "][question_text]\" class=\"form-control\" />                            </div>                        </div>                    </div>                    <div class=\"choices_container\" id=\"choices_container_").concat(data.question_ID, "\" style=\"display: none;\">                        <h4>Choices</h4>                        <div id=\"choices_inner_").concat(data.question_ID, "\">                            \n                        </div>                        <a                            href=\"#\"                            id=\"add-choice_").concat(data.question_ID, "\"                            class=\"btn btn-default btn-sm add-choice\"                            data-question=\"").concat(data.question_ID, "\"                            data-survey=\"").concat(survey, "\"                            ><i class=\"fa fa-plus\"></i> Add Choice</a>                    </div>                </div>                "));
+        $(".questions-container").append("                <div class=\"question\" id=\"question_".concat(data.question_ID, "\" data-question=\"").concat(data.question_ID, "\">                    <input\n                        type=\"hidden\"                        name=\"questions[").concat(data.question_ID, "][ID]\"                        value=\"").concat(data.question_ID, "\" />\n                    <h4 class=\"clearfix\">\n                        <span class=\"float-left\">Question 1</span>                        <span class=\"float-right\">                            <a                                href=\"#\"                                data-question=\"").concat(data.question_ID, "\"                                data-survey=\"").concat(survey, "\"                                data-indicator=\"\"                                class=\"btn btn-danger btn-sm delete-question\"                            >Delete Question</a>                        </span>                    </h4>\n                    <div class=\"form-group row\">                        <label class=\"col-md-2 control-label\">Question Type</label>                        <div class=\"col-md-4\">                            <select                                name=\"questions[").concat(data.question_ID, "][question_type]\"                                class=\"form-control form-control-sm question_type\"                                data-question=\"").concat(data.question_ID, "\"                            >                                <option value=\"input\">Open Text</option>                                <option value=\"radio\">Select One</option>                                <option value=\"checkbox\">Select Many</option>                                <option value=\"textarea\">Multi-line Open Text</option>                            </select>                        </div>                        <div class=\"col-md-6\">                            <div class=\"checkbox\">                                <label>                                    <input type=\"checkbox\" name=\"questions[").concat(data.question_ID, "][is_required]\" value=\"1\"> Required question                                </label>                            </div>                        </div>                    </div>\n                    <div class=\"form-group row\">                        <label class=\"col-md-2 control-label\">Question Text</label>                        <div class=\"col-md-10\">                            <input type=\"\" name=\"questions[").concat(data.question_ID, "][question_text]\" class=\"form-control form-control-sm\" />                        </div>                    </div>\n                    <div class=\"choices_container\" id=\"choices_container_").concat(data.question_ID, "\" style=\"display: none;\">                        <h4>Choices</h4>                        <div id=\"choices_inner_").concat(data.question_ID, "\">                            \n                        </div>                        <a                            href=\"#\"                            id=\"add-choice_").concat(data.question_ID, "\"                            class=\"btn btn-default btn-sm add-choice\"                            data-question=\"").concat(data.question_ID, "\"                            data-survey=\"").concat(survey, "\"                            ><i class=\"fa fa-plus\"></i> Add Choice</a>                    </div>                </div>                "));
       }
     },
     error: function error(data) {

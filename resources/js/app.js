@@ -42,16 +42,11 @@ $(document).on("click", ".delete-question", function(e) {
 
     const survey = $(this).data("survey");
     const question = $(this).data("question");
-    const indicator = $(this).data("indicator");
 
     $.ajax({
-        url: "/api/deleteQuestion",
-        type: "POST",
-        data: {
-            survey,
-            question,
-            indicator
-        },
+        url: `/api/surveys/${survey}/questions/${question}`,
+        type: "DELETE",
+        data: {},
         datatype: "json",
         success: function(data) {
             console.log(data);
@@ -68,14 +63,12 @@ $(document).on("click", ".add-question", function(e) {
     $(this).attr("disabled", "disabled");
 
     const survey = $(this).data("survey");
-    const indicator = $(this).data("indicator");
 
     $.ajax({
-        url: "/api/addQuestion",
+        url: `/api/surveys/${survey}/questions`,
         type: "POST",
         data: {
-            survey,
-            indicator
+            survey
         },
         datatype: "json",
         success: function(data) {
@@ -91,59 +84,55 @@ $(document).on("click", ".add-question", function(e) {
                         name="questions[${data.question_ID}][ID]"\
                         value="${data.question_ID}" />\
 
-                    <h4 class="clear">
-                        <span class="pull-left">Question ${
-                            data.question_order
-                        }</span>\
-                        <span class="pull-right">\
+                    <h4 class="clearfix">
+                        <span class="float-left">Question 1</span>\
+                        <span class="float-right">\
                             <a\
                                 href="#"\
                                 data-question="${data.question_ID}"\
                                 data-survey="${survey}"\
-                                data-indicator="${indicator}"\
-                                class="btn btn-default btn-sm delete-question"\
+                                data-indicator=""\
+                                class="btn btn-danger btn-sm delete-question"\
                             >Delete Question</a>\
                         </span>\
                     </h4>\
-                    <div class="row">\
-                        <div class="form-group form-group-sm">\
-                            <label class="col-md-2 control-label">Question Type</label>\
-                            <div class="col-md-4">\
-                                <select\
-                                    name="questions[${
+
+                    <div class="form-group row">\
+                        <label class="col-md-2 control-label">Question Type</label>\
+                        <div class="col-md-4">\
+                            <select\
+                                name="questions[${
+                                    data.question_ID
+                                }][question_type]"\
+                                class="form-control form-control-sm question_type"\
+                                data-question="${data.question_ID}"\
+                            >\
+                                <option value="input">Open Text</option>\
+                                <option value="radio">Select One</option>\
+                                <option value="checkbox">Select Many</option>\
+                                <option value="textarea">Multi-line Open Text</option>\
+                            </select>\
+                        </div>\
+                        <div class="col-md-6">\
+                            <div class="checkbox">\
+                                <label>\
+                                    <input type="checkbox" name="questions[${
                                         data.question_ID
-                                    }][question_type]"\
-                                    class="form-control question_type"\
-                                    data-question="${data.question_ID}"\
-                                >\
-                                    <option value="input">Open Text</option>\
-                                    <option value="radio">Select One</option>\
-                                    <option value="checkbox">Select Many</option>\
-                                    <option value="textarea">Multi-line Open Text</option>\
-                                </select>\
-                            </div>\
-                            <div class="col-md-6">\
-                                <div class="checkbox">\
-                                    <label>\
-                                        <input type="checkbox" name="questions[${
-                                            data.question_ID
-                                        }][is_required]" value="1"> Required question\
-                                    </label>\
-                                </div>\
+                                    }][is_required]" value="1"> Required question\
+                                </label>\
                             </div>\
                         </div>\
                     </div>\
 
-                    <div class="row">\
-                        <div class="form-group form-group-sm">\
-                            <label class="col-md-2 control-label">Question Text</label>\
-                            <div class="col-md-10">\
-                                <input type="" name="questions[${
-                                    data.question_ID
-                                }][question_text]" class="form-control" />\
-                            </div>\
+                    <div class="form-group row">\
+                        <label class="col-md-2 control-label">Question Text</label>\
+                        <div class="col-md-10">\
+                            <input type="" name="questions[${
+                                data.question_ID
+                            }][question_text]" class="form-control form-control-sm" />\
                         </div>\
                     </div>\
+
                     <div class="choices_container" id="choices_container_${
                         data.question_ID
                     }" style="display: none;">\
