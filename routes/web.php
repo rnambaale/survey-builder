@@ -28,6 +28,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/surveys/{survey}', 'SurveysController@update');
 
 
-    Route::get('/surveys/{survey}/questions', 'SurveysController@questions');
-    Route::patch('/surveys/{survey}/questions', 'SurveysController@update_questions');
+    Route::get('/surveys/{survey}/questions', 'QuestionsController@index');
+    Route::patch('/surveys/{survey}/questions', 'QuestionsController@updates');
 });

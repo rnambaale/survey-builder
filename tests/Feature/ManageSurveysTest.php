@@ -14,10 +14,17 @@ class ManageSurveysTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutExceptionHandling();
+    }
+
+
     /** @test */
     public function a_user_can_view_existing_surveys()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         $this->actingAs(factory(User::class)->create());
 
@@ -30,7 +37,7 @@ class ManageSurveysTest extends TestCase
     /** @test */
     public function a_user_can_create_a_survey()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         $this->actingAs(factory(User::class)->create());
 
@@ -46,7 +53,7 @@ class ManageSurveysTest extends TestCase
     /** @test */
     public function a_user_can_update_a_survey()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         $this->actingAs(factory(User::class)->create());
 
@@ -66,7 +73,7 @@ class ManageSurveysTest extends TestCase
     /** @test */
     public function a_user_can_view_survey_questions()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         $this->actingAs(factory(User::class)->create());
 
@@ -85,7 +92,7 @@ class ManageSurveysTest extends TestCase
     /** @test */
     public function a_user_can_add_a_question_to_a_survey()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         $this->actingAs(factory(User::class)->create());
 
@@ -105,7 +112,7 @@ class ManageSurveysTest extends TestCase
     /** @test */
     public function a_user_can_delete_a_survey_question()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         $this->actingAs(factory(User::class)->create());
 
@@ -119,5 +126,37 @@ class ManageSurveysTest extends TestCase
         $this->delete('/api/surveys/' . $survey->id . '/questions/' . $question->id)->assertStatus(200);
 
         $this->assertDatabaseMissing('questions', $question->toArray());
+    }
+
+    /** @test */
+    public function a_user_can_batch_update_questions()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $survey = factory(Survey::class)->create();
+
+        $question1 = $survey->addQuestion([
+            'question_text' => $this->faker->sentence(),
+            'question_type' => 'input'
+        ]);
+
+        $question1Update = ['ID' => $question1->id, 'question_text' => 'Updated Text', 'question_type' => 'input'];
+
+        $question2 = $survey->addQuestion([
+            'question_text' => $this->faker->sentence(),
+            'question_type' => 'input'
+        ]);
+
+        $question2Update = ['ID' => $question2->id, 'question_text' => 'Updated Text', 'question_type' => 'input'];
+
+        $this->patch('surveys/' . $survey->id . '/questions', [
+            'questions' => [
+                $question1Update,
+                $question2Update
+            ]
+        ])->assertRedirect('surveys/' . $survey->id . '/questions');
+
+        $this->assertDatabaseHas('questions', $question1Update);
+        $this->assertDatabaseHas('questions', $question2Update);
     }
 }

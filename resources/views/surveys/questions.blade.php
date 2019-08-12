@@ -22,12 +22,12 @@
                                     data-question="{{ $question->id }}">
                                     <input
                                         type="hidden"
-                                        name="questions[{{ $key }}][ID]"
+                                        name="questions[{{ $question->id }}][ID]"
                                         value="{{ $question->id }}" />
 
                                     <h4 class="">
                                         <div class="clearfix">
-                                            <span class="float-left">Question 1</span>
+                                            <span class="float-left">Question {{ $question->question_order }}</span>
                                             <span class="float-right">
                                                 <a
                                                     href="#"
@@ -43,7 +43,7 @@
                                         <label class="col-md-2 control-label">Question Type</label>
                                         <div class="col-md-4">
                                             <select
-                                                name="questions[{{ $key }}][question_type]"
+                                                name="questions[{{ $question->id }}][question_type]"
                                                 class="form-control form-control-sm question_type" data-question="{{ $question->id }}"
                                             >
                                                 <option value="input" {{ ($question->question_type === 'input') ? 'selected' : '' }} >Open Text</option>
@@ -57,7 +57,7 @@
                                                 <label>
                                                     <input
                                                         type="checkbox"
-                                                        name="questions[{{ $key }}][is_required]"
+                                                        name="questions[{{ $question->id }}][is_required]"
                                                         value="1"
                                                         {{ ($question->is_required == 1) ? 'checked' : '' }}
                                                     > Required question
@@ -71,7 +71,7 @@
                                         <div class="col-md-10">
                                             <input
                                                 type=""
-                                                name="questions[{{ $key }}][question_text]"
+                                                name="questions[{{ $question->id }}][question_text]"
                                                 class="form-control form-control-sm" value="{{ $question->question_text }}" />
                                         </div>
                                     </div>

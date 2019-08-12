@@ -86,7 +86,9 @@ $(document).on("click", ".add-question", function(e) {
                         value="${data.id}" />\
 
                     <h4 class="clearfix">
-                        <span class="float-left">Question 1</span>\
+                        <span class="float-left">Question ${
+                            data.question_order
+                        }</span>\
                         <span class="float-right">\
                             <a\
                                 href="#"\
@@ -127,23 +129,23 @@ $(document).on("click", ".add-question", function(e) {
                         <label class="col-md-2 control-label">Question Text</label>\
                         <div class="col-md-10">\
                             <input type="" name="questions[${
-                                data.question_ID
+                                data.id
                             }][question_text]" class="form-control form-control-sm" />\
                         </div>\
                     </div>\
 
                     <div class="choices_container" id="choices_container_${
-                        data.question_ID
+                        data.id
                     }" style="display: none;">\
                         <h4>Choices</h4>\
-                        <div id="choices_inner_${data.question_ID}">\
+                        <div id="choices_inner_${data.id}">\
                             
                         </div>\
                         <a\
                             href="#"\
-                            id="add-choice_${data.question_ID}"\
+                            id="add-choice_${data.id}"\
                             class="btn btn-default btn-sm add-choice"\
-                            data-question="${data.question_ID}"\
+                            data-question="${data.id}"\
                             data-survey="${survey}"\
                             ><i class="fa fa-plus"></i> Add Choice</a>\
                     </div>\
