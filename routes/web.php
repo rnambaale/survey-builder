@@ -11,15 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::get('/home', 'HomeController@index')->name('home');
+
     Route::get('/surveys', 'SurveysController@index');
     Route::get('/surveys/create', 'SurveysController@create');
     Route::post('/surveys', 'SurveysController@store');

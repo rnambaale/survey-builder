@@ -1,6 +1,6 @@
 # survey builder
 
-Simple Survey Builder Application
+Simple Survey management Application
 
 1. TDD
 
@@ -54,6 +54,6 @@ and visit [http://localhost:8000](http://localhost:8000) to see the application 
 
 ### Todo
 
-1. Adding Choice questions
+1. Adding Choices questions
 2. Users should be able to attempt any survey of their choice
 3. Administrator should see the results of the attempted surveys
