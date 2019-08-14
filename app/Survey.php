@@ -10,13 +10,14 @@ class Survey extends Model
 
     public function questions()
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Question::class)
+            ->orderBy('question_order', "asc");
     }
 
     public function addQuestion($attributes)
     {
         //$last_question = Question::orderBy('id', 'desc')->first();
-        $last_question = Question::where('survey_id', $this->id)->orderBy('id', 'desc')->first();
+        $last_question = Question::where('survey_id', $this->id)->orderBy('question_order', 'desc')->first();
 
         if ($last_question) {
             $question_order = ($last_question->question_order + 1);

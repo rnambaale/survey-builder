@@ -15,7 +15,8 @@ class Question extends Model
 
     public function choices()
     {
-        return $this->hasMany(Choice::class);
+        return $this->hasMany(Choice::class)
+            ->orderBy('choice_order', 'asc');
     }
 
     public function addChoice($attributes)
@@ -23,7 +24,7 @@ class Question extends Model
         //$last_choice = Choice::orderBy('id', 'desc')->first();
         //$last_choice = $this->choices->last();
         //$last_choice = $this->choices->sortByDesc('id')->first();
-        $last_choice = Choice::where('question_id', $this->id)->orderBy('id', 'desc')->first();
+        $last_choice = Choice::where('question_id', $this->id)->orderBy('choice_order', 'desc')->first();
 
         if ($last_choice) {
             $choice_order = ($last_choice->choice_order + 1);
