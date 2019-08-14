@@ -15,8 +15,8 @@ class Survey extends Model
 
     public function addQuestion($attributes)
     {
-        $last_question = Question::orderBy('id', 'desc')->first();
-        //$last_question = $this->questions->last();
+        //$last_question = Question::orderBy('id', 'desc')->first();
+        $last_question = Question::where('survey_id', $this->id)->orderBy('id', 'desc')->first();
 
         if ($last_question) {
             $question_order = ($last_question->question_order + 1);
