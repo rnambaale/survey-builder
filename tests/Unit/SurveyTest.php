@@ -16,6 +16,7 @@ class SurveyTest extends TestCase
     public function it_can_add_a_question()
     {
         $this->withoutExceptionHandling();
+
         $survey = factory(Survey::class)->create();
 
         $question = $survey->addQuestion([

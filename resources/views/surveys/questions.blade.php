@@ -72,8 +72,54 @@
                                             <input
                                                 type=""
                                                 name="questions[{{ $question->id }}][question_text]"
+                                                placeholder="Please Specify Question"
                                                 class="form-control form-control-sm" value="{{ $question->question_text }}" />
                                         </div>
+                                    </div>
+
+                                    <div class="choices_container" id="choices_container_{{ $question->id }}" style="{{ ($question->question_type == 'input' || $question->question_type == 'textarea') ? 'display: none;' : '' }}">
+                                        <h4>Choices</h4>
+                                        <div id="choices_inner_{{ $question->id }}">
+                                            @foreach ($question->choices as $choice)
+                                            <div class="choice" id="choice_{{ $choice->id }}">
+                                                <input
+                                                    type="hidden"
+                                                    name="choices[{{ $choice->id }}][ID]"
+                                                    value="{{ $choice->id }}" />
+                                
+                                                <input
+                                                    type="hidden"
+                                                    name="choices[{{ $choice->id }}][question_ID]"
+                                                    value="{{ $question->id }}" />
+                                
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">Choice {{ $choice->choice_order }}</label>
+                                                        <div class="col-md-8">
+                                                            <input
+                                                                type=""
+                                                                name="choices[{{ $choice->id }}][choice_text]"
+                                                                placeholder="Please Specify Choice"
+                                                                class="form-control form-control-sm" value="{{ $choice->choice_text }}">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a 
+                                                                href="#"
+                                                                class="btn btn-danger btn-sm delete-choice"
+                                                                data-choice="{{ $choice->id }}"
+                                                                data-question="{{ $question->id }}"
+                                                            ><i class="fa fa-trash"></i> Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <a
+                                            href="#"
+                                            id="add-choice_{{ $question->id }}"
+                                            class="btn btn-success btn-sm add-choice"
+                                            data-question="{{ $question->id }}"
+                                            data-survey="{{ $survey->id }}"
+                                            ><i class="fa fa-plus"></i> Add Choice</a>
                                     </div>
                                                                     
                                 </div>

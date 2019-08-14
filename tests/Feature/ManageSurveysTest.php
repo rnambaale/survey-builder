@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Choice;
+use App\Question;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,12 +15,6 @@ use App\Survey;
 class ManageSurveysTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->withoutExceptionHandling();
-    }
 
 
     /** @test */
@@ -83,7 +79,7 @@ class ManageSurveysTest extends TestCase
             'question_type' => 'input'
         ]);
 
-        $this->get('/surveys/' . $survey->id . '/questions')
+        $this->get('surveys/' . $survey->id . '/questions')
             ->assertStatus(200)
             ->assertSee($survey->title)
             ->assertSee($question->question_text);
@@ -112,7 +108,6 @@ class ManageSurveysTest extends TestCase
     /** @test */
     public function a_user_can_delete_a_survey_question()
     {
-        //$this->withoutExceptionHandling();
 
         $this->actingAs(factory(User::class)->create());
 
@@ -131,32 +126,106 @@ class ManageSurveysTest extends TestCase
     /** @test */
     public function a_user_can_batch_update_questions()
     {
+        $this->withoutExceptionHandling();
+
         $this->actingAs(factory(User::class)->create());
 
         $survey = factory(Survey::class)->create();
 
-        $question1 = $survey->addQuestion([
-            'question_text' => $this->faker->sentence(),
-            'question_type' => 'input'
-        ]);
+        $question1 = factory(Question::class)->create(['survey_id' => $survey->id]);
 
         $question1Update = ['ID' => $question1->id, 'question_text' => 'Updated Text', 'question_type' => 'input'];
 
-        $question2 = $survey->addQuestion([
-            'question_text' => $this->faker->sentence(),
-            'question_type' => 'input'
-        ]);
+        $question2 = factory(Question::class)->create(['survey_id' => $survey->id]);
 
         $question2Update = ['ID' => $question2->id, 'question_text' => 'Updated Text', 'question_type' => 'input'];
 
+        $question_attributes = [
+            $question1Update,
+            $question2Update
+        ];
+
         $this->patch('surveys/' . $survey->id . '/questions', [
-            'questions' => [
-                $question1Update,
-                $question2Update
-            ]
+            'questions' => $question_attributes,
+            'choices'   => []
         ])->assertRedirect('surveys/' . $survey->id . '/questions');
 
         $this->assertDatabaseHas('questions', $question1Update);
         $this->assertDatabaseHas('questions', $question2Update);
+    }
+
+    /** @test */
+    public function a_user_can_batch_update_question_choices()
+    {
+        $this->withExceptionHandling();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $survey = factory(Survey::class)->create();
+
+        $question = factory(Question::class)->create(['survey_id' => $survey->id]);
+
+        $choice1 = factory(Choice::class)->create(['question_id' => $question->id]);
+        $choice2 = factory(Choice::class)->create(['question_id' => $question->id]);
+
+        $choice1_update = [
+            'ID'            => $choice1->id,
+            'choice_text'   => 'Updated Text'
+        ];
+
+        $choice2_update = [
+            'ID'            => $choice2->id,
+            'choice_text'   => 'Updated Text'
+        ];
+
+        $question_update = [
+            'ID'            => $question->id,
+            'question_text' => 'Updated Text',
+            'question_type' => 'input'
+        ];
+
+        $question_attributes = [
+            $question_update
+        ];
+
+        $choices_attributes = [
+            $choice1_update,
+            $choice2_update
+        ];
+
+        $this->patch('surveys/' . $survey->id . '/questions', [
+            'questions' => $question_attributes,
+            'choices'   => $choices_attributes
+        ])->assertRedirect('surveys/' . $survey->id . '/questions');
+
+        $this->assertDatabaseHas('choices', $choice1_update);
+        $this->assertDatabaseHas('choices', $choice2_update);
+        $this->assertDatabaseHas('questions', $question_update);
+    }
+
+    /** @test */
+    public function a_user_can_add_a_choice_to_a_question()
+    {
+        $question = factory(Question::class)->create();
+
+        $choice_attributes = [
+            'choice_text' => $this->faker->sentence()
+        ];
+
+        $this->post('/api/questions/' . $question->id . '/choices', $choice_attributes)
+            ->assertStatus(201);
+
+        $this->assertDatabaseHas('choices', $choice_attributes);
+    }
+
+    /** @test */
+    public function a_user_can_delete_a_choice_of_a_question()
+    {
+        $choice = factory(Choice::class)->create();
+
+        $this->delete('/api/questions/' . $choice->question_id . '/choices/' . $choice->id)
+            ->assertStatus(200);
+
+        $this->assertDatabaseMissing('choices', $choice->toArray());
     }
 }
