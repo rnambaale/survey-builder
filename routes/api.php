@@ -15,6 +15,12 @@ use Illuminate\Http\Request;
 
 Route::get('surveys', 'SurveyAPIController@index');
 
-Route::post('surveys/{survey}/questions', 'QuestionsAPIController@store');
+/** Questions */
 
+Route::post('surveys/{survey}/questions', 'QuestionsAPIController@store');
 Route::delete('surveys/{survey}/questions/{question}', 'QuestionsAPIController@destroy');
+
+
+/** Choices */
+Route::post('questions/{question}/choices', 'ChoicesAPIController@store');
+Route::delete('questions/{question}/choices/{choice}', 'ChoicesAPIController@destroy');

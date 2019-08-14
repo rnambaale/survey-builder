@@ -130,7 +130,7 @@ $(document).on("click", ".add-question", function(e) {
                         <div class="col-md-10">\
                             <input type="" name="questions[${
                                 data.id
-                            }][question_text]" class="form-control form-control-sm" />\
+                            }][question_text]" class="form-control form-control-sm" placeholder="Please Specify Question" />\
                         </div>\
                     </div>\
 
@@ -144,7 +144,7 @@ $(document).on("click", ".add-question", function(e) {
                         <a\
                             href="#"\
                             id="add-choice_${data.id}"\
-                            class="btn btn-default btn-sm add-choice"\
+                            class="btn btn-success btn-sm add-choice"\
                             data-question="${data.id}"\
                             data-survey="${survey}"\
                             ><i class="fa fa-plus"></i> Add Choice</a>\
@@ -165,47 +165,44 @@ $(document).on("click", ".add-choice", function(e) {
     const question = $(this).data("question");
 
     $.ajax({
-        url: "/api/addQuestionChoice",
+        url: `/api/questions/${question}/choices`,
         type: "POST",
         data: {
-            survey,
-            question
+            choice_text: ""
         },
         datatype: "json",
         success: function(data) {
             console.log(data);
-            $(`#add-choice_${question}`).removeAttr("disabled");
+            $(`#add-choice_${data.question_id}`).removeAttr("disabled");
 
-            $(`#choices_inner_${question}`).append(`
-                <div class="choice" id="choice_${data.choice_ID}">\
+            $(`#choices_inner_${data.question_id}`).append(`
+                <div class="choice" id="choice_${data.id}">\
                 <input\
                     type="hidden"\
-                    name="choices[${data.choice_ID}][ID]"\
-                    value="${data.choice_ID}" />\
+                    name="choices[${data.id}][ID]"\
+                    value="${data.id}" />\
 
                 <input\
                     type="hidden"\
-                    name="choices[${data.choice_ID}][question_ID]"\
-                    value="${question}" />\
+                    name="choices[${data.id}][question_ID]"\
+                    value="${data.question_id}" />\
 
-                    <div class="row">\
-                        <div class="form-group form-group-sm">\
-                            <label class="col-md-2 control-label">Choice ${
-                                data.choice_order
-                            }</label>\
-                            <div class="col-md-8">\
-                                <input type="" name="choices[${
-                                    data.choice_ID
-                                }][choice_text]" class="form-control">\
-                            </div>\
-                            <div class="col-md-2">\
-                                <a \
-                                    href="#"\
-                                    class="btn btn-default btn-sm delete-choice"\
-                                    data-choice="${data.choice_ID}"\
-                                    data-question="${question}"\
-                                >Delete Choice</a>\
-                            </div>\
+                    <div class="form-group row">\
+                        <label class="col-md-2 control-label">Choice ${
+                            data.choice_order
+                        }</label>\
+                        <div class="col-md-8">\
+                            <input type="" placeholder="Please Specify Choice" name="choices[${
+                                data.id
+                            }][choice_text]" class="form-control form-control-sm">\
+                        </div>\
+                        <div class="col-md-2">\
+                            <a \
+                                href="#"\
+                                class="btn btn-danger btn-sm delete-choice"\
+                                data-choice="${data.id}"\
+                                data-question="${data.question_id}"\
+                            ><i class="fa fa-trash"></i> Delete</a>\
                         </div>\
                     </div>\
                 </div>\
@@ -222,16 +219,15 @@ $(document).on("click", ".delete-choice", function(e) {
     $(this).attr("disabled", "disabled");
 
     $.ajax({
-        url: "/api/deleteQuestionChoice",
-        type: "POST",
-        data: {
-            choice,
-            question
-        },
+        url: `/api/questions/${question}/choices/${choice}`,
+        type: "DELETE",
+        data: {},
         datatype: "json",
         success: function(data) {
             console.log(data);
-            $(`#question_${data.question_ID} #choice_${choice}`).remove();
+            $(
+                `#question_${data.question_ID} #choice_${data.choice_ID}`
+            ).remove();
         },
         error: function(data) {
             console.log(data);
