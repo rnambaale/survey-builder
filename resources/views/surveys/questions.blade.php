@@ -73,7 +73,7 @@
                                                 type=""
                                                 name="questions[{{ $question->id }}][question_text]"
                                                 placeholder="Please Specify Question"
-                                                class="form-control form-control-sm" value="{{ $question->question_text }}" />
+                                                class="form-control form-control-sm" value="{{ $question->question_text }}" required/>
                                         </div>
                                     </div>
 
@@ -99,7 +99,7 @@
                                                                 type=""
                                                                 name="choices[{{ $choice->id }}][choice_text]"
                                                                 placeholder="Please Specify Choice"
-                                                                class="form-control form-control-sm" value="{{ $choice->choice_text }}">
+                                                                class="form-control form-control-sm" value="{{ $choice->choice_text }}" required>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <a 
@@ -107,7 +107,7 @@
                                                                 class="btn btn-danger btn-sm delete-choice"
                                                                 data-choice="{{ $choice->id }}"
                                                                 data-question="{{ $question->id }}"
-                                                            ><i class="fa fa-trash"></i> Delete</a>
+                                                            ><i class="fa fa-trash"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
