@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Survey;
 use App\Question;
 
-class QuestionsAPIController extends Controller
+use App\Http\Controllers\Controller;
+
+class QuestionsController extends Controller
 {
     public function store(Survey $survey)
     {

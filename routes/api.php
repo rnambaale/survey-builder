@@ -13,14 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('surveys', 'SurveyAPIController@index');
+Route::get('surveys', 'API\SurveyController@index');
 
 /** Questions */
 
-Route::post('surveys/{survey}/questions', 'QuestionsAPIController@store');
-Route::delete('surveys/{survey}/questions/{question}', 'QuestionsAPIController@destroy');
+Route::post('surveys/{survey}/questions', 'API\QuestionsController@store');
+Route::delete('surveys/{survey}/questions/{question}', 'API\QuestionsController@destroy');
 
 
 /** Choices */
-Route::post('questions/{question}/choices', 'ChoicesAPIController@store');
-Route::delete('questions/{question}/choices/{choice}', 'ChoicesAPIController@destroy');
+Route::post('questions/{question}/choices', 'API\ChoicesController@store');
+Route::delete('questions/{question}/choices/{choice}', 'API\ChoicesController@destroy');

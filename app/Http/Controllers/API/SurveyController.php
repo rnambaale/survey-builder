@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Survey;
 use App\Question;
+use App\Http\Controllers\Controller;
 
-class SurveyAPIController extends Controller
+class SurveyController extends Controller
 {
     public function index()
     {
