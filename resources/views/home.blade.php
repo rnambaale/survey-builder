@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <h2>Welcome System Administrator</h2>
+                    <p>This application lets you build a customized survey which you can use to send to people and record their responses. The responses can be viewed and downloaded into an Excel spreadsheet, and you can also view charts of the results.</p>
                 </div>
             </div>
         </div>

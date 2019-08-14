@@ -130,7 +130,7 @@ $(document).on("click", ".add-question", function(e) {
                         <div class="col-md-10">\
                             <input type="" name="questions[${
                                 data.id
-                            }][question_text]" class="form-control form-control-sm" placeholder="Please Specify Question" />\
+                            }][question_text]" class="form-control form-control-sm" placeholder="Please Specify Question" required/>\
                         </div>\
                     </div>\
 
@@ -194,7 +194,7 @@ $(document).on("click", ".add-choice", function(e) {
                         <div class="col-md-8">\
                             <input type="" placeholder="Please Specify Choice" name="choices[${
                                 data.id
-                            }][choice_text]" class="form-control form-control-sm">\
+                            }][choice_text]" class="form-control form-control-sm" required>\
                         </div>\
                         <div class="col-md-2">\
                             <a \
@@ -202,7 +202,7 @@ $(document).on("click", ".add-choice", function(e) {
                                 class="btn btn-danger btn-sm delete-choice"\
                                 data-choice="${data.id}"\
                                 data-question="${data.question_id}"\
-                            ><i class="fa fa-trash"></i> Delete</a>\
+                            ><i class="fa fa-trash"></i></a>\
                         </div>\
                     </div>\
                 </div>\

@@ -3,9 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Surveys <a href="/surveys/create" data-toggle="modal" data-target="#addModal">Add Survey</a></div>
+                <div class="card-header">
+                    <div class="float-left">Surveys</div>
+                    <div class="float-right"><a href="/surveys/create" data-toggle="modal" data-target="#addModal">Add Survey</a></div>
+                </div>
 
                 <div class="card-body">
                     <table class="table">
