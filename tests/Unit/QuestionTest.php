@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Survey;
 use App\Question;
+use App\Choice;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
