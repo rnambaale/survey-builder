@@ -11,7 +11,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="/responses/{{ $survey->id }}/store">
+                    <form method="POST" action="/responses/{{ $survey->id }}">
                         @csrf
 
                         @foreach ($survey->questions as $question)

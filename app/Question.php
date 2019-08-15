@@ -36,4 +36,9 @@ class Question extends Model
 
         return $this->choices()->create($attributes);
     }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
 }
