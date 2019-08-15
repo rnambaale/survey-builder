@@ -18,7 +18,6 @@
                                 <th>Edit</th>
                                 <th>Take Survey</th>
                                 <th>View Results</th>
-                                <th>View Charts</th>
                                 <th>Questions</th>
                             </tr>
                         </thead>
@@ -27,7 +26,6 @@
                             <tr>
                                 <td>{{ $survey->title }}</td>
                                 <td><a href="/surveys/{{ $survey->id }}/edit" data-toggle="modal" data-target="#addModal">Edit Survey</a></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td><a href="/surveys/{{$survey->id}}/questions">Manage</a></td>
