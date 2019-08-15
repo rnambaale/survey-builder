@@ -30,6 +30,7 @@ class QuestionsController extends Controller
             $question = Question::findOrFail($req_question['ID']);
             $question->question_text = $req_question['question_text'];
             $question->question_type = $req_question['question_type'];
+            $question->is_required      = isset($req_question['is_required']);
             $question->save();
         }
 
