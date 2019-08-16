@@ -52,6 +52,4 @@ and visit [http://localhost:8000](http://localhost:8000) to see the application 
 
 ### Todo
 
-1. Adding Choices questions
-2. Users should be able to attempt any survey of their choice
-3. Administrator should see the results of the attempted surveys
+1. Administrator should be able to download the results in excel
