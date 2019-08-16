@@ -27,4 +27,17 @@ class SurveyTest extends TestCase
         $this->assertCount(1, $survey->questions);
         $this->assertTrue($survey->questions->contains($question));
     }
+
+    /** @test */
+    public function it_can_add_a_response()
+    {
+        $this->withExceptionHandling();
+
+        $survey = factory(Survey::class)->create();
+
+        $response = $survey->addResponse();
+
+        $this->assertCount(1, $survey->responses);
+        $this->assertTrue($survey->responses->contains($response));
+    }
 }

@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 Route::get('surveys', 'API\SurveyController@index');
 
 /** Questions */
-
 Route::post('surveys/{survey}/questions', 'API\QuestionsController@store');
 Route::delete('surveys/{survey}/questions/{question}', 'API\QuestionsController@destroy');
 

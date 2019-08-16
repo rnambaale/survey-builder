@@ -28,4 +28,14 @@ class Survey extends Model
 
         return $this->questions()->create($attributes);
     }
+
+    public function responses()
+    {
+        return $this->hasMany(Response::class);
+    }
+
+    public function addResponse()
+    {
+        return $this->responses()->create();
+    }
 }
