@@ -26,8 +26,8 @@
                             <tr>
                                 <td>{{ $survey->title }}</td>
                                 <td><a href="/surveys/{{ $survey->id }}/edit" data-toggle="modal" data-target="#addModal">Edit Survey</a></td>
-                                <td><a href="/respond/{{ $survey->id }}">Take Survey</a></td>
-                                <td></td>
+                                <td><a href="/respond/{{ $survey->id }}" target="_blank">Take Survey</a></td>
+                                <td><a href="/surveys/{{ $survey->id }}/responses">View Results</a></td>
                                 <td><a href="/surveys/{{$survey->id}}/questions">Manage</a></td>
                             </tr>
                             @endforeach

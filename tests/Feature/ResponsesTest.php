@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Answer;
 use App\Question;
 use App\Survey;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -58,5 +59,29 @@ class ResponsesTest extends TestCase
         $this->assertDatabaseHas('responses', ['survey_id' => $question->survey_id]);
         $this->assertDatabaseHas('answers', $answer1);
         $this->assertDatabaseHas('answers', $answer2);
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_view_responses()
+    {
+        $this->withExceptionHandling();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $survey = factory(Survey::class)->create();
+
+        $question = factory(Question::class)->create(['survey_id' => $survey->id]);
+
+        $response = $survey->addResponse();
+
+        $answer = $response->addAnswer([
+            'answer_value'  => 'Some Value',
+            'question_id'   => $question['id']
+        ]);
+
+        $this->get('surveys/' . $survey->id . '/responses')
+            ->assertStatus(200)
+            ->assertSee($question->question_text)
+            ->assertSee($answer->answer_value);
     }
 }

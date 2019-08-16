@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Response;
 use App\Survey;
 use Illuminate\Http\Request;
 
 class ResponsesController extends Controller
 {
+    public function index(Survey $survey)
+    {
+        return view('responses.index', compact('survey'));
+    }
+
     public function create(Survey $survey)
     {
         return view('responses.create', compact('survey'));
