@@ -1,4 +1,4 @@
-# survey builder
+# survey builder [![Build Status](https://travis-ci.org/rnambaale/survey-builder.svg?branch=master)](https://travis-ci.org/rnambaale/survey-builder)
 
 Simple Survey management Application
 
